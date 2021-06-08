@@ -37,7 +37,7 @@ public class UserService implements IUserService {
 //		if (fetchedUser != null)
 //			return false;
 		UserEntity user = new UserEntity();
-		BeanUtils.copyProperties(userDto, user);
+		//BeanUtils.copyProperties(userDto, user);
 		String password = bCryptPasswordEncoder.encode(user.getPassword());
 		user.setPassword(password);
 		System.out.println(user);

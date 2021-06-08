@@ -44,7 +44,7 @@ public class UserEntity {
 	
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id")
+	@JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
 	private List<NoteInfo> note;
 
 

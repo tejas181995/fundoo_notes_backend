@@ -42,7 +42,7 @@ public class NoteService implements INoteService {
 		UserEntity user = userRepository.getUser(userId) ;
 		NoteInfo noteInfo = new NoteInfo();
 		if (user != null) {
-			BeanUtils.copyProperties(note, noteInfo);;
+			BeanUtils.copyProperties(note, noteInfo);
 			noteInfo.setArchived(false);
 			noteInfo.setTrashed(false);
 			noteInfo.setColor("white");
