@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,7 @@ import com.backend.fundoo.model.NoteInfo;
 import com.backend.fundoo.response.Response;
 import com.backend.fundoo.service.INoteService;
 
+@CrossOrigin(origins = "*")
 @RestControllerAdvice
 @RequestMapping("note")
 public class NoteController {
@@ -29,12 +31,15 @@ public class NoteController {
 	@Autowired
 	private INoteService noteService;
 	
+	@CrossOrigin(origins = "*")
 	@PostMapping("create")
 	public ResponseEntity<Response> createNote(@RequestBody NoteDto note, @RequestHeader String token) {
 		boolean result = noteService.createNote(note, token);
 		return (result) ? ResponseEntity.status(HttpStatus.CREATED).body(new Response("note created", 200, note))
 				: ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response("Error.....please check your noteId", 404, note));
 	}
+	
+	@CrossOrigin(origins = "*")
 	@GetMapping("getAllNotes")
 	public ResponseEntity<Response> getAllNotes(@RequestHeader("token") String token) {
 		List<NoteInfo> list = noteService.getAllNotes(token);

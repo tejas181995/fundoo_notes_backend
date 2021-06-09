@@ -65,6 +65,7 @@ public class NoteService implements INoteService {
 				noteRepository.deleteNote(noteId);
 				return true;
 			}
+
 			throw new NoteNotFoundException(NOTE_STATUS);
 		}
 		throw new UserNotFoundException(USER_STATUS);

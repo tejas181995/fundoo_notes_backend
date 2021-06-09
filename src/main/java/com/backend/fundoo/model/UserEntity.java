@@ -50,7 +50,6 @@ public class UserEntity {
 
 	public UserEntity(long userId, String firstName, String lastName, String email, String password, boolean isVerifed,
 			List<NoteInfo> note) {
-		super();
 		this.userId = userId;
 		this.firstName = firstName;
 		this.lastName = lastName;

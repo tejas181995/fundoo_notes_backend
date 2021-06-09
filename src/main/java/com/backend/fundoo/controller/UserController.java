@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,7 +28,7 @@ import io.swagger.annotations.ApiResponses;
 import io.swagger.annotations.ApiResponse;
 
 
-
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -39,7 +40,7 @@ public class UserController {
 	private JwtGenerator generate;
 	
 
-	
+	@CrossOrigin(origins = "*")
 	@PostMapping("/registration")
 	@ApiOperation(value = "Api to register user", response = Response.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "registration successfull"),
@@ -52,6 +53,7 @@ public class UserController {
 
 	}
 	
+	@CrossOrigin(origins = "*")
 	@PostMapping("login")
 	@ApiOperation(value = "Api for user login", response = Response.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "login successful"),
@@ -100,5 +102,10 @@ public class UserController {
 			return ResponseEntity.status(HttpStatus.ACCEPTED).body(new Response("verified", 200));
 		return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(new Response("not verified", 400));
 	}
+	@PostMapping("logout")
+	public String logout () {
+		return "Logout successfully";
+	}
+	
 	
 }

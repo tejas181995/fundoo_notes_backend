@@ -16,6 +16,8 @@ import com.backend.fundoo.response.MailResponse;
 import com.backend.fundoo.util.JwtGenerator;
 import com.backend.fundoo.util.MailServiceProvider;
 
+import antlr.Token;
+
 @Service
 public class UserService implements IUserService {
 	
@@ -37,7 +39,7 @@ public class UserService implements IUserService {
 //		if (fetchedUser != null)
 //			return false;
 		UserEntity user = new UserEntity();
-		//BeanUtils.copyProperties(userDto, user);
+		BeanUtils.copyProperties(userDto, user);
 		String password = bCryptPasswordEncoder.encode(user.getPassword());
 		user.setPassword(password);
 		System.out.println(user);
@@ -61,7 +63,6 @@ public class UserService implements IUserService {
 		UserEntity user = userRepository.getUser(login.getEmail());
 		if(user != null) {
 			if (bCryptPasswordEncoder.matches(login.getPassword(), user.getPassword())) {				
-				
 					return user;		
 			
 			}
