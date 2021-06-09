@@ -90,10 +90,9 @@ public class NoteService implements INoteService {
 	@Transactional
 	@Override
 	public boolean trashNote(long noteId, String token) {
-		UserEntity user = null;
-		user = userRepository.getUser(user.getUserId());
-		if (user != null) {
-			NoteInfo note = noteRepository.findById(noteId);
+		UserEntity userId = userRepository.getUser(generate.parseJWT(token));
+		NoteInfo note = noteRepository.findById(noteId);
+		if (userId != null) {
 			if (note != null) {
 				if (!note.isTrashed()) {
 					note.setTrashed(true);

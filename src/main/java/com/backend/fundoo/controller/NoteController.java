@@ -55,6 +55,14 @@ public class NoteController {
 		}
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response("Empty list", 404));
 	}
-
+	
+	@PostMapping("trash/{noteId}")
+	public ResponseEntity<Response> trashNote(@PathVariable("noteId") long noteId, @RequestHeader String token) {
+		boolean result = noteService.trashNote(noteId, token);
+		return (result) ? ResponseEntity.status(HttpStatus.OK).body(new Response("Note trashed", 200))
+				: ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(new Response("Error, check your noteId", 502));
+	}
+	
+	
 
 }
