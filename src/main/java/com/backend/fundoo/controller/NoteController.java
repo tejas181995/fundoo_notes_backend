@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -89,5 +90,14 @@ public class NoteController {
 		return (result) ? ResponseEntity.status(HttpStatus.OK).body(new Response("Note updated", 200))
 				: ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response("Error....check your noteId", 400));
 	}
+	
+	@DeleteMapping("delete/{noteId}")
+	public ResponseEntity<Response> deleteNotePermanently(@PathVariable("noteId") long noteId,
+			@RequestHeader("token") String token) {
+		boolean result = noteService.deleteNote(noteId, token);
+		return (result) ? ResponseEntity.status(HttpStatus.OK).body(new Response("Note deleted", 200))
+				: ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response("Error....please check your noteId!", 404));
+	}
+
 
 }
