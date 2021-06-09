@@ -80,8 +80,12 @@ public class NoteService implements INoteService {
 					note.setArchived(true);
 					noteRepository.save(note);
 					return true;
+				}else {
+					note.setArchived(false);
+					noteRepository.save(note);
+					return true;
 				}
-				throw new NoteNotFoundException("note already archived");
+				
 			}
 			throw new NoteNotFoundException(NOTE_STATUS);
 		
@@ -98,8 +102,11 @@ public class NoteService implements INoteService {
 					note.setTrashed(true);
 					noteRepository.save(note);
 					return true;
+				}else {
+					note.setTrashed(false);
+					noteRepository.save(note);
+					return true;
 				}
-				return false;
 			}
 			throw new NoteNotFoundException(NOTE_STATUS);
 		}
@@ -176,8 +183,6 @@ public class NoteService implements INoteService {
 				note.setNoteId(updateNote.getNoteId());
 				note.setTitle(updateNote.getTitle());
 				note.setDescription(updateNote.getDescription());
-				note.setArchived(updateNote.isArchived());
-				note.setTrashed(updateNote.isTrashed());
 				noteRepository.save(note);
 				return true;
 			}
