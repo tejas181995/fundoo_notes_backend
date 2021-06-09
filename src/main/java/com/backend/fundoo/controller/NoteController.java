@@ -8,9 +8,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.backend.fundoo.dto.NoteDto;
@@ -71,6 +73,13 @@ public class NoteController {
 		}
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response("Empty list", 404));
 	}
-
+	
+	@PutMapping("updateColour/{noteId}")
+	public ResponseEntity<Response> updateColour(@PathVariable("noteId") long noteId, @RequestHeader("token") String token,
+			@RequestParam String colour) {
+		boolean result = noteService.updateColour(noteId, token, colour);
+		return (result) ? ResponseEntity.status(HttpStatus.OK).body(new Response("Colour updated", 200))
+				: ResponseEntity.status(HttpStatus.NOT_MODIFIED).body(new Response("Colour not updated", 304));
+	}
 
 }

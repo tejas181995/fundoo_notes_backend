@@ -150,10 +150,9 @@ public class NoteService implements INoteService {
 	}
 
 	@Override
-	public boolean updateColour(long noteId, String colour) {
-		UserEntity user = null;
-		user = userRepository.getUser(user.getUserId());
-		if (user != null) {
+	public boolean updateColour(long noteId, String token, String colour) {
+		UserEntity userId = userRepository.getUser(generate.parseJWT(token));
+		if (userId != null) {
 			NoteInfo note = noteRepository.findById(noteId);
 			if (note != null) {
 				note.setColor(colour);
@@ -168,7 +167,7 @@ public class NoteService implements INoteService {
 
 	@Transactional
 	@Override
-	public boolean updateNote(NoteUpdation updateNote, String token) {
+	public boolean updateNote(NoteUpdation updateNote, String token ) {
 		UserEntity userId = userRepository.getUser(generate.parseJWT(token));
 		NoteInfo note = noteRepository.findById(updateNote.getNoteId());
 		if (userId != null) {
