@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.backend.fundoo.dto.NoteDto;
+import com.backend.fundoo.dto.NoteUpdation;
 import com.backend.fundoo.model.NoteInfo;
 import com.backend.fundoo.response.Response;
 import com.backend.fundoo.service.INoteService;
@@ -80,6 +81,13 @@ public class NoteController {
 		boolean result = noteService.updateColour(noteId, token, colour);
 		return (result) ? ResponseEntity.status(HttpStatus.OK).body(new Response("Colour updated", 200))
 				: ResponseEntity.status(HttpStatus.NOT_MODIFIED).body(new Response("Colour not updated", 304));
+	}
+	
+	@PutMapping("updateNote")
+	public ResponseEntity<Response> updateNote(@RequestBody NoteUpdation update, @RequestHeader("token") String token) {
+		boolean result = noteService.updateNote(update, token);
+		return (result) ? ResponseEntity.status(HttpStatus.OK).body(new Response("Note updated", 200))
+				: ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response("Error....check your noteId", 400));
 	}
 
 }
