@@ -63,6 +63,14 @@ public class NoteController {
 				: ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(new Response("Error, check your noteId", 502));
 	}
 	
-	
+	@GetMapping("getAllNotes/trashed")
+	public ResponseEntity<Response> getAllTrashedNotes(@RequestHeader("token") String token) {
+		List<NoteInfo> list = noteService.getAllTrashedNotes(token);
+		if (!list.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.OK).body(new Response("All trashed notes are", 200, list));
+		}
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response("Empty list", 404));
+	}
+
 
 }
