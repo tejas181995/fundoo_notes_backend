@@ -13,13 +13,13 @@ public interface INoteService {
 
 	
 	public boolean createNote(NoteDto note,  String token);
-	public boolean updateNote(NoteUpdation updateNote);
+	public boolean updateNote(NoteUpdation updateNote, String token);
 	public boolean deleteNote(long noteId, String token);
-	public boolean archiveNote(long noteId);
-	public boolean trashNote(long noteId);
+	public boolean archiveNote(long noteId, String token);
+	public boolean trashNote(long noteId, String token);
 	public List<NoteInfo> getAllNotes(String token);
-	public List<NoteInfo> getAllTrashedNotes();
-	public List<NoteInfo> getAllArchivedNotes();
+	public List<NoteInfo> getAllTrashedNotes(String token);
+	public List<NoteInfo> getAllArchivedNotes(String token);
 	public boolean updateColour(long noteId,  String colour);
 	
 	

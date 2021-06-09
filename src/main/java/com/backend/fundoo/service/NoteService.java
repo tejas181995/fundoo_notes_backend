@@ -53,27 +53,7 @@ public class NoteService implements INoteService {
 		throw new UserNotFoundException("User does not exist");
 	}
 	
-	@Transactional
-	@Override
-	public boolean updateNote(NoteUpdation updateNote) {
-		UserEntity user = null;
-		user = userRepository.getUser(user.getUserId());
-		NoteInfo note = noteRepository.findById(updateNote.getNoteId());
-		if (user != null) {
-			if (note != null) {
-				BeanUtils.copyProperties(updateNote, user);
-				note.setNoteId(updateNote.getNoteId());
-				note.setTitle(updateNote.getTitle());
-				note.setDescription(updateNote.getDescription());
-				note.setArchived(updateNote.isArchived());
-				note.setTrashed(updateNote.isTrashed());
-				noteRepository.save(note);
-				return true;
-			}
-			throw new NoteNotFoundException(NOTE_STATUS);
-		}
-		throw new UserNotVerifiedException("Please verify");
-	}
+	
 	
 	@Transactional
 	@Override
@@ -92,10 +72,8 @@ public class NoteService implements INoteService {
 	
 	@Transactional
 	@Override
-	public boolean archiveNote(long noteId) {
-		UserEntity user =null;
-		user =  userRepository.getUser(user.getUserId());
-		if (user != null) {
+	public boolean archiveNote(long noteId , String token) {
+		UserEntity userId = userRepository.getUser(generate.parseJWT(token));
 			NoteInfo note = noteRepository.findById(noteId);
 			if (note != null) {
 				if (!note.isArchived()) {
@@ -106,13 +84,12 @@ public class NoteService implements INoteService {
 				throw new NoteNotFoundException("note already archived");
 			}
 			throw new NoteNotFoundException(NOTE_STATUS);
-		}
-		throw new UserNotFoundException(USER_STATUS);
+		
 	}
 
 	@Transactional
 	@Override
-	public boolean trashNote(long noteId) {
+	public boolean trashNote(long noteId, String token) {
 		UserEntity user = null;
 		user = userRepository.getUser(user.getUserId());
 		if (user != null) {
@@ -146,7 +123,7 @@ public class NoteService implements INoteService {
 	}
 
 	@Override
-	public List<NoteInfo> getAllTrashedNotes(){
+	public List<NoteInfo> getAllTrashedNotes(String token){
 		UserEntity user = null;
 		user = userRepository.getUser(user.getUserId());
 		if (user != null) {
@@ -160,7 +137,7 @@ public class NoteService implements INoteService {
 	}
 
 	@Override
-	public List<NoteInfo> getAllArchivedNotes() {
+	public List<NoteInfo> getAllArchivedNotes(String token) {
 		UserEntity user = null;
 		user = userRepository.getUser(user.getUserId());
 		if (user != null) {
@@ -189,4 +166,27 @@ public class NoteService implements INoteService {
 		throw new UserNotFoundException(USER_STATUS);
 	}
 
+
+	@Transactional
+	@Override
+	public boolean updateNote(NoteUpdation updateNote, String token) {
+		UserEntity userId = userRepository.getUser(generate.parseJWT(token));
+		NoteInfo note = noteRepository.findById(updateNote.getNoteId());
+		if (userId != null) {
+			if (note != null) {
+				BeanUtils.copyProperties(updateNote, userId);
+				note.setNoteId(updateNote.getNoteId());
+				note.setTitle(updateNote.getTitle());
+				note.setDescription(updateNote.getDescription());
+				note.setArchived(updateNote.isArchived());
+				note.setTrashed(updateNote.isTrashed());
+				noteRepository.save(note);
+				return true;
+			}
+			throw new NoteNotFoundException(NOTE_STATUS);
+		}
+		throw new UserNotVerifiedException("Please verify");
+	}
 }
+
+
