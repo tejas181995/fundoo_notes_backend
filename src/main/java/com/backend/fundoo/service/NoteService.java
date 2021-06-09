@@ -138,8 +138,8 @@ public class NoteService implements INoteService {
 
 	@Override
 	public List<NoteInfo> getAllArchivedNotes(String token) {
-		UserEntity user = null;
-		user = userRepository.getUser(user.getUserId());
+		long userId = generate.parseJWT(token);
+		UserEntity user = userRepository.getUser(userId);
 		if (user != null) {
 			List<NoteInfo> fetchedNotes = noteRepository.getAllArchivedNotes(user.getUserId());
 			if (!fetchedNotes.isEmpty()) {

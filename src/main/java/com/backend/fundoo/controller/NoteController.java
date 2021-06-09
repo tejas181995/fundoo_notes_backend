@@ -47,5 +47,14 @@ public class NoteController {
 				: ResponseEntity.status(HttpStatus.ALREADY_REPORTED)
 						.body(new Response("Error, check your noteId", 208));
 	}
+	@GetMapping("getAllNotes/archived")
+	public ResponseEntity<Response> getAllArchivedNotes(@RequestHeader("token") String token) {
+		List<NoteInfo> list = noteService.getAllArchivedNotes(token);
+		if (!list.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.OK).body(new Response("All archived notes are ", 200, list));
+		}
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response("Empty list", 404));
+	}
+
 
 }
