@@ -19,8 +19,8 @@ import org.springframework.stereotype.Component;
 public class MailServiceProvider {
 
 	public static void sendEmail(String toEmail, String subject, String msg) {
-		String username = "tejasdev92@gmail.com";
-		String password = "Qaz@1234";
+		String username = "username";
+		String password = "password";
 		Properties prop = new Properties();
 		prop.put("mail.smtp.host", "smtp.gmail.com");
 		prop.put("mail.smtp.port", "587");
