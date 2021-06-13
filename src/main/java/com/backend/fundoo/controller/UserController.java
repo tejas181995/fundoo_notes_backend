@@ -20,6 +20,9 @@ import com.backend.fundoo.dto.UserDto;
 import com.backend.fundoo.model.UserEntity;
 import com.backend.fundoo.service.IUserService;
 import com.backend.fundoo.util.JwtGenerator;
+
+import antlr.Token;
+
 import  com.backend.fundoo.response.Response;
 import com.backend.fundoo.response.UserAuthenticationResponse;
 
@@ -86,7 +89,7 @@ public class UserController {
 	@PutMapping("updatePassword/{token}")
 	@ApiOperation(value = "Api to update password", response = Response.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "password updated"),
-			@ApiResponse(code = 304, message = "The resource you were trying to fetch is not found") })
+	@ApiResponse(code = 304, message = "The resource you were trying to fetch is not found") })
 	public ResponseEntity<Response> updatePassword(@PathVariable("token") String token,
 			@RequestBody UpdatePassword pwd) {
 		boolean result = service.updatePassword(token, pwd);
@@ -104,6 +107,7 @@ public class UserController {
 	}
 	@PostMapping("logout")
 	public String logout () {
+		
 		return "Logout successfully";
 	}
 	

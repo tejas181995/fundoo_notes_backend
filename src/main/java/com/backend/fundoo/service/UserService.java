@@ -74,9 +74,10 @@ public class UserService implements IUserService {
 	@Override
 	public boolean isUserAvailable(String email) {
 		UserEntity isUserAvailable = userRepository.getUser(email);
+		
 		if (isUserAvailable != null) {
 			
-				String response = MailResponse.formMessage("http://localhost:8083/user/updatePassword",
+				String response = MailResponse.formMessage("http://localhost:4200/user/updatePassword/id",
 						generate.createJwtToken(isUserAvailable.getUserId()));
 				MailServiceProvider.sendEmail(isUserAvailable.getEmail(), "Update password link", response);
 				return true;
@@ -99,5 +100,6 @@ public class UserService implements IUserService {
 		}
 		return false;
 	}
-
+	
+	
 }

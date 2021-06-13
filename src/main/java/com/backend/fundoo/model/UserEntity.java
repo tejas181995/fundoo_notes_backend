@@ -43,7 +43,7 @@ public class UserEntity {
 	private boolean isVerifed;
 	
 	@JsonIgnore
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
 	private List<NoteInfo> note;
 

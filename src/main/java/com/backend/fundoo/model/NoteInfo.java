@@ -31,8 +31,7 @@ public class NoteInfo  implements Serializable{
 	@Column(columnDefinition = "boolean default false")
 	private boolean isTrashed;
 	
-	private String color;
-	
-	
-	
-}
+	@Column(updatable = true)
+	private String colour ;
+
+	}

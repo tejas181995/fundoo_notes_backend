@@ -45,7 +45,7 @@ public class NoteService implements INoteService {
 			BeanUtils.copyProperties(note, noteInfo);
 			noteInfo.setArchived(false);
 			noteInfo.setTrashed(false);
-			noteInfo.setColor("white");
+			//noteInfo.setColour("white");
 			user.getNote().add(noteInfo);
 			noteRepository.save(noteInfo);
 			return true;
@@ -157,13 +157,15 @@ public class NoteService implements INoteService {
 		throw new UserNotFoundException(USER_STATUS);
 	}
 
+	@Transactional
 	@Override
 	public boolean updateColour(long noteId, String token, String colour) {
-		UserEntity userId = userRepository.getUser(generate.parseJWT(token));
-		if (userId != null) {
+		long userId = generate.parseJWT(token);
+		UserEntity user = userRepository.getUser(userId);
+		if (user != null) {
 			NoteInfo note = noteRepository.findById(noteId);
 			if (note != null) {
-				note.setColor(colour);
+				note.setColour(colour);
 				noteRepository.save(note);
 				return true;
 			}

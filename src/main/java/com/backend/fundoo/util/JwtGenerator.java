@@ -27,9 +27,11 @@ private static final String SECRET = "123456789";
 		try {
 			if (jwtToken != null) {
 				userId = JWT.require(Algorithm.HMAC256(SECRET)).build().verify(jwtToken).getClaim("id").asLong();
-			}
+
+			}	
 		} catch (IllegalArgumentException | JWTCreationException e) {
 			e.printStackTrace();
+			
 		}
 		return userId;
 		

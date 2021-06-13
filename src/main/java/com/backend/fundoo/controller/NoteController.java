@@ -49,6 +49,7 @@ public class NoteController {
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response("Empty list ", 404));
 	}
 
+	@CrossOrigin(origins = "*")
 	@PostMapping("archive/{noteId}")
 	public ResponseEntity<Response> archiveNote(@PathVariable("noteId") long noteId, @RequestHeader String token) {
 		boolean result = noteService.archiveNote(noteId, token);
@@ -56,6 +57,8 @@ public class NoteController {
 				: ResponseEntity.status(HttpStatus.ALREADY_REPORTED)
 						.body(new Response("Error, check your noteId", 208));
 	}
+	
+	@CrossOrigin(origins = "*")
 	@GetMapping("getAllNotes/archived")
 	public ResponseEntity<Response> getAllArchivedNotes(@RequestHeader("token") String token) {
 		List<NoteInfo> list = noteService.getAllArchivedNotes(token);
@@ -65,6 +68,7 @@ public class NoteController {
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response("Empty list", 404));
 	}
 	
+	@CrossOrigin(origins = "*")
 	@PostMapping("trash/{noteId}")
 	public ResponseEntity<Response> trashNote(@PathVariable("noteId") long noteId, @RequestHeader String token) {
 		boolean result = noteService.trashNote(noteId, token);
@@ -72,6 +76,7 @@ public class NoteController {
 				: ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(new Response("Error, check your noteId", 502));
 	}
 	
+	@CrossOrigin(origins = "*")
 	@GetMapping("getAllNotes/trashed")
 	public ResponseEntity<Response> getAllTrashedNotes(@RequestHeader("token") String token) {
 		List<NoteInfo> list = noteService.getAllTrashedNotes(token);
@@ -81,6 +86,7 @@ public class NoteController {
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response("Empty list", 404));
 	}
 	
+	@CrossOrigin(origins = "*")
 	@PutMapping("updateColour/{noteId}")
 	public ResponseEntity<Response> updateColour(@PathVariable("noteId") long noteId, @RequestHeader("token") String token,
 			@RequestParam String colour) {
@@ -89,6 +95,7 @@ public class NoteController {
 				: ResponseEntity.status(HttpStatus.NOT_MODIFIED).body(new Response("Colour not updated", 304));
 	}
 	
+	@CrossOrigin(origins = "*")
 	@PutMapping("updateNote")
 	public ResponseEntity<Response> updateNote(@RequestBody NoteUpdation update, @RequestHeader("token") String token) {
 		boolean result = noteService.updateNote(update, token);
@@ -96,6 +103,7 @@ public class NoteController {
 				: ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response("Error....check your noteId", 400));
 	}
 	
+	@CrossOrigin(origins = "*")
 	@DeleteMapping("delete/{noteId}")
 	public ResponseEntity<Response> deleteNotePermanently(@PathVariable("noteId") long noteId,
 			@RequestHeader("token") String token) {
